@@ -16,7 +16,7 @@ class Game
 {
 public:
     void start();
-    void init();
+    bool init();
 
     Game();
     ~Game();
@@ -33,8 +33,11 @@ private:
     void checkPlayerPos();
     void checkLastWall();
     void updateBackground();
+    void updateScoreText();
 
     void drawWalls();
+
+    void lost();
 
     sf::RenderWindow window;
     sf::RectangleShape background;
@@ -44,12 +47,15 @@ private:
     std::vector<Wall> walls;
     Player player;
 
+    sf::Font font;
+    sf::Text scoreText;
+
     unsigned int score;
     int scoredWall; //Id of the scored wall. If 0 -> no scored
 
     const int windowWidth = 500;
     const int windowHeight = 800;
-    const int spaceBetweenWalls = 450;
+    const int spaceBetweenWalls = 420;
 };
 
 #endif // GAME_H

@@ -3,8 +3,11 @@
 int main()
 {
     Game game;
-    game.init();
-    game.start();
+
+    if(game.init())
+        game.start();
+    else
+        return 0;
 
     return 0;
 }

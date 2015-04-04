@@ -10,11 +10,12 @@ public:
     void right();
     void update();
 
+    bool running;
+
     Player();
     ~Player();
 
 private:
-    bool running;
     int direction; //0 -> left 1 -> right
 
     double v_grav = 0.28;

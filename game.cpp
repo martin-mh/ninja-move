@@ -5,7 +5,7 @@ void Game::start()
     gameLoop();
 }
 
-void Game::init()
+bool Game::init()
 {
     window.setFramerateLimit(60);
 
@@ -25,8 +25,24 @@ void Game::init()
     window.setView(view);
 
     walls.push_back(Wall(randomValue(1, 349), 50, &window));
-    walls.push_back(Wall(randomValue(1, 349), -400, &window));
-    walls.push_back(Wall(randomValue(1, 349), -850, &window));
+    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls, &window));
+    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls * 2, &window));
+    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls * 3, &window));
+
+    if(!font.loadFromFile("OpenSans-Regular.ttf"))
+    {
+        std::cerr << "Can't load font file. Game will exit.";
+        window.close();
+        return false;
+    }
+
+    scoreText.setFont(font);
+    scoreText.setString("0");
+    scoreText.setCharacterSize(42);
+    scoreText.setColor(sf::Color::Magenta);
+    scoreText.setPosition(window.getSize().x - 36, 2);
+
+    return true;
 }
 
 void Game::gameLoop()
@@ -54,6 +70,8 @@ void Game::computeGameLogic()
     computeCollisions();
 
     updateBackground();
+
+    updateScoreText();
 }
 
 void Game::draw()
@@ -66,6 +84,8 @@ void Game::draw()
     window.draw(player);
 
     drawWalls();
+
+    window.draw(scoreText);
 
     window.display();
 }
@@ -90,15 +110,27 @@ void Game::computeCollisions()
     for(std::vector<Wall>::iterator it = walls.begin(); it != walls.end() ; ++it)
     {
         if(Collision(player.getGlobalBounds(), it->first.getGlobalBounds())
-                || Collision(player.getGlobalBounds(), it->second.getGlobalBounds()))
+                || Collision(player.getGlobalBounds(), it->second.getGlobalBounds())
+                || Collision(player.getGlobalBounds(), it->underBlock.getGlobalBounds())
+                || Collision(player.getGlobalBounds(), it->overBlock.getGlobalBounds()))
         {
-            window.close();
+            lost();
         }
     }
 
     if(!player.getGlobalBounds().intersects(getRectFromView(view)))
     {
-        window.close();
+        lost();
+    }
+
+    if(0 > player.getGlobalBounds().left)
+    {
+        player.setPosition(0, player.getPosition().y);
+    }
+
+    if(window.getSize().x < player.getGlobalBounds().left + player.getGlobalBounds().width)
+    {
+        player.setPosition(window.getSize().x - player.getGlobalBounds().width, player.getPosition().y);
     }
 }
 
@@ -132,6 +164,7 @@ void Game::checkPlayerPos()
             if(playerPos.y > wallPos.y && playerPos.y < wallPos.y + wallSize.y)
             {
                 ++score;
+                scoreText.setString(std::to_string(score));
                 scoredWall = wall.id;
                 std::cout << "New score : " << score << std::endl;
             }
@@ -143,9 +176,10 @@ void Game::checkPlayerPos()
 void Game::checkLastWall()
 {
     Wall firstWall = walls.front();
-    sf::FloatRect firstWallPosition = firstWall.first.getGlobalBounds();
+    sf::FloatRect firstWallPosition1 = firstWall.overBlock.getGlobalBounds();
+    sf::FloatRect firstWallPosition2 = firstWall.underBlock.getGlobalBounds();
 
-    if(!firstWallPosition.intersects(getRectFromView(view)))
+    if(!firstWallPosition1.intersects(getRectFromView(view)) && !firstWallPosition2.intersects(getRectFromView(view)))
     {
         walls.erase(walls.begin());
 
@@ -162,12 +196,44 @@ void Game::updateBackground()
                            view.getCenter().y - (window.getSize().y / 2));
 }
 
+void Game::updateScoreText()
+{
+    scoreText.setPosition(window.getSize().x - 36, view.getCenter().y - (window.getSize().y / 2) + 2);
+}
+
 void Game::drawWalls()
 {
     for(std::vector<Wall>::iterator it = walls.begin(); it != walls.end() ; ++it)
     {
         it->draw();
     }
+}
+
+void Game::lost()
+{
+    player.setPosition(window.getSize().x / 2 - player.getGlobalBounds().width / 2,
+                       window.getSize().y / 2 - player.getGlobalBounds().height / 2);
+
+
+    sf::FloatRect viewRect;
+    viewRect.width = window.getSize().x;
+    viewRect.height = window.getSize().y;
+
+    view.reset(viewRect);
+
+    window.setView(view);
+
+    walls.clear();
+
+    walls.push_back(Wall(randomValue(1, 349), 50, &window));
+    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls, &window));
+    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls * 2, &window));
+    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls * 3, &window));
+
+    scoreText.setString("0");
+    scoreText.setPosition(window.getSize().x - 36, 2);
+
+    player.running = false;
 }
 
 Game::Game() :

@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "utils.hpp"
+
 #include <iostream>
 
 class Wall
@@ -15,6 +17,9 @@ public:
 
     sf::RectangleShape first;
     sf::RectangleShape second;
+
+    sf::RectangleShape underBlock;
+    sf::RectangleShape overBlock;
 
     Wall(int leftMargin, int top, sf::RenderWindow * window);
     ~Wall();
