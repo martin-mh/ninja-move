@@ -230,6 +230,8 @@ void Game::lost()
     walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls * 2, &window));
     walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls * 3, &window));
 
+    score = 0;
+    scoredWall = 0;
     scoreText.setString("0");
     scoreText.setPosition(window.getSize().x - 36, 2);
 
