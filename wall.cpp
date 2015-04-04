@@ -1,5 +1,7 @@
 #include "wall.h"
 
+int Wall::counter = 0;
+
 void Wall::draw()
 {
     window->draw(first);
@@ -8,6 +10,9 @@ void Wall::draw()
 
 Wall::Wall(int leftMargin, int top, sf::RenderWindow *window)
 {
+    ++counter;
+    id = counter;
+
     this->window = window;
 
     first.setFillColor(sf::Color::Blue);

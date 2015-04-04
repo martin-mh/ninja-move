@@ -44,9 +44,12 @@ private:
     std::vector<Wall> walls;
     Player player;
 
+    unsigned int score;
+    int scoredWall; //Id of the scored wall. If 0 -> no scored
+
     const int windowWidth = 500;
     const int windowHeight = 800;
-    const int spaceBetweenWalls = 400;
+    const int spaceBetweenWalls = 450;
 };
 
 #endif // GAME_H

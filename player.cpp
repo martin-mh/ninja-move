@@ -37,7 +37,7 @@ void Player::right()
     v_y = v_saut;
 }
 
-Player::Player() : sf::CircleShape(25,4)
+Player::Player() : sf::CircleShape(17,4)
 {
     running = false;
 

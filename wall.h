@@ -3,10 +3,15 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <iostream>
+
 class Wall
 {
 public:
     void draw();
+
+    int id;
+    static int counter;
 
     sf::RectangleShape first;
     sf::RectangleShape second;

@@ -25,8 +25,8 @@ void Game::init()
     window.setView(view);
 
     walls.push_back(Wall(randomValue(1, 349), 50, &window));
-    walls.push_back(Wall(randomValue(1, 349), -350, &window));
-    walls.push_back(Wall(randomValue(1, 349), -750, &window));
+    walls.push_back(Wall(randomValue(1, 349), -400, &window));
+    walls.push_back(Wall(randomValue(1, 349), -850, &window));
 }
 
 void Game::gameLoop()
@@ -111,6 +111,33 @@ void Game::checkPlayerPos()
         view.move(0, ((view.getCenter().y - playerPos.y ) * -1) + 200);
     }
 
+    for(std::vector<Wall>::iterator it = walls.begin(); it != walls.end() ; ++it)
+    {
+        Wall wall = *it;
+
+        sf::Vector2f playerPos = player.getPosition();
+        sf::Vector2f wallPos = wall.first.getPosition();
+        sf::Vector2f wallSize = wall.first.getSize();
+
+        if(scoredWall != 0)
+        {
+            if(wall.id == scoredWall && !(playerPos.y > wallPos.y && playerPos.y < wallPos.y + wallSize.y))
+            {
+                scoredWall = 0;
+            }
+
+        }
+        else
+        {
+            if(playerPos.y > wallPos.y && playerPos.y < wallPos.y + wallSize.y)
+            {
+                ++score;
+                scoredWall = wall.id;
+                std::cout << "New score : " << score << std::endl;
+            }
+        }
+    }
+
 }
 
 void Game::checkLastWall()
@@ -124,10 +151,8 @@ void Game::checkLastWall()
 
         Wall lastWall = walls.back();
 
-        Wall newWall(randomValue(1, 349), lastWall.first.getGlobalBounds().top - 400, &window);
+        Wall newWall(randomValue(1, 349), lastWall.first.getGlobalBounds().top - spaceBetweenWalls, &window);
         walls.push_back(newWall);
-
-        std::cout << lastWall.first.getGlobalBounds().top << std::endl;
     }
 }
 
@@ -146,7 +171,9 @@ void Game::drawWalls()
 }
 
 Game::Game() :
-    window(sf::VideoMode(500, 800), "Ninja move")
+    window(sf::VideoMode(500, 800), "Ninja move"),
+    score(0),
+    scoredWall(0)
 {
 
 }
