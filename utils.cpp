@@ -14,8 +14,8 @@ bool Collision(const sf::FloatRect &box1, const sf::FloatRect &box2)
 
 int randomValue(const int min, const int max)
 {
-    std::random_device rand_dev;
-    std::mt19937 generator(rand_dev());
+    static std::random_device rand_dev;
+    static std::mt19937 generator(rand_dev());
     std::uniform_int_distribution<int> distr(min, max);
 
     return distr(generator);

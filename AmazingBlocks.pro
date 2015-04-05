@@ -9,16 +9,13 @@ SOURCES += main.cpp \
     game.cpp \
     utils.cpp
 
-LIBS += -L"/home/imote/Development/SFML-build/lib"
+LIBS += -L"C:\Users\Martin\Documents\SFML-2.2\lib"
 
-CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
-CONFIG(debug, debug|release): LIBS += -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d
+CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+CONFIG(debug, debug|release): LIBS += -lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
 
-INCLUDEPATH += "/home/imote/Development/SFML/include"
-DEPENDPATH += "/home/imote/Development/SFML/include"
-
-include(deployment.pri)
-qtcAddDeployment()
+INCLUDEPATH += "C:\Users\Martin\Documents\SFML-2.2\include"
+DEPENDPATH += "C:\Users\Martin\Documents\SFML-2.2\include"
 
 HEADERS += \
     wall.h \
