@@ -27,8 +27,8 @@ public:
 private:
     sf::RenderWindow * window;
 
-    int thickness = 45;
-    int holeSize = 150;
+    const static int thickness = 45;
+    const static int holeSize = 150;
 };
 
 #endif // WALL_H

@@ -7,9 +7,9 @@
 
 #include <iostream>
 
-extern bool Collision(sf::FloatRect box1, sf::FloatRect box2);
+extern bool Collision(const sf::FloatRect &box1, const sf::FloatRect &box2);
 extern int randomValue(const int min, const int max);
-extern sf::FloatRect getRectFromView(sf::View view);
+extern sf::FloatRect getRectFromView(const sf::View &view);
 
 #endif // COLLISION_HPP
 

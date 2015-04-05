@@ -53,9 +53,9 @@ private:
     unsigned int score;
     int scoredWall; //Id of the scored wall. If 0 -> no scored
 
-    const int windowWidth = 500;
-    const int windowHeight = 800;
-    const int spaceBetweenWalls = 420;
+    const static int windowWidth = 500;
+    const static int windowHeight = 800;
+    const static int spaceBetweenWalls = 420;
 };
 
 #endif // GAME_H

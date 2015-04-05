@@ -24,12 +24,12 @@ bool Game::init()
 
     window.setView(view);
 
-    walls.push_back(Wall(randomValue(1, 349), 50, &window));
-    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls, &window));
-    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls * 2, &window));
-    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls * 3, &window));
+    walls.push_back(Wall(randomValue(50, 290), 50, &window));
+    walls.push_back(Wall(randomValue(50, 290), 50 - spaceBetweenWalls, &window));
+    walls.push_back(Wall(randomValue(50, 290), 50 - spaceBetweenWalls * 2, &window));
+    walls.push_back(Wall(randomValue(50, 290), 50 - spaceBetweenWalls * 3, &window));
 
-    if(!font.loadFromFile("OpenSans-Regular.ttf"))
+    if(!font.loadFromFile("Roboto-Regular.ttf"))
     {
         std::cerr << "Can't load font file. Game will exit.";
         window.close();
@@ -40,7 +40,7 @@ bool Game::init()
     scoreText.setString("0");
     scoreText.setCharacterSize(42);
     scoreText.setColor(sf::Color::Magenta);
-    scoreText.setPosition(window.getSize().x - 36, 2);
+    scoreText.setPosition(window.getSize().x - 55, 2);
 
     return true;
 }
@@ -185,7 +185,7 @@ void Game::checkLastWall()
 
         Wall lastWall = walls.back();
 
-        Wall newWall(randomValue(1, 349), lastWall.first.getGlobalBounds().top - spaceBetweenWalls, &window);
+        Wall newWall(randomValue(50, 290), lastWall.first.getGlobalBounds().top - spaceBetweenWalls, &window);
         walls.push_back(newWall);
     }
 }
@@ -198,7 +198,7 @@ void Game::updateBackground()
 
 void Game::updateScoreText()
 {
-    scoreText.setPosition(window.getSize().x - 36, view.getCenter().y - (window.getSize().y / 2) + 2);
+    scoreText.setPosition(window.getSize().x - 55, view.getCenter().y - (window.getSize().y / 2) + 2);
 }
 
 void Game::drawWalls()
@@ -225,15 +225,15 @@ void Game::lost()
 
     walls.clear();
 
-    walls.push_back(Wall(randomValue(1, 349), 50, &window));
-    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls, &window));
-    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls * 2, &window));
-    walls.push_back(Wall(randomValue(1, 349), 50 - spaceBetweenWalls * 3, &window));
+    walls.push_back(Wall(randomValue(50, 290), 50, &window));
+    walls.push_back(Wall(randomValue(50, 290), 50 - spaceBetweenWalls, &window));
+    walls.push_back(Wall(randomValue(50, 290), 50 - spaceBetweenWalls * 2, &window));
+    walls.push_back(Wall(randomValue(50, 290), 50 - spaceBetweenWalls * 3, &window));
 
     score = 0;
     scoredWall = 0;
     scoreText.setString("0");
-    scoreText.setPosition(window.getSize().x - 36, 2);
+    scoreText.setPosition(window.getSize().x - 55, 2);
 
     player.running = false;
 }

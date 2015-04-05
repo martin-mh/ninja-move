@@ -1,6 +1,6 @@
 #include "utils.hpp"
 
-bool Collision(sf::FloatRect box1, sf::FloatRect box2)
+bool Collision(const sf::FloatRect &box1, const sf::FloatRect &box2)
 {
     if(    (box2.left >= box1.left + box1.width)
        ||  (box2.left + box2.width <= box1.left)
@@ -22,7 +22,7 @@ int randomValue(const int min, const int max)
 }
 
 
-sf::FloatRect getRectFromView(sf::View view)
+sf::FloatRect getRectFromView(const sf::View &view)
 {
     sf::FloatRect rect;
     rect.width = view.getSize().x;
